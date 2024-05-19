@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ public class CurrencyConverter {
     private static final String API_KEY = "d229bf99ae7da6d50edc34b6";
 
     private static final List<String> CURRENCY_CODES = Arrays.asList("EUR", "ARS", "BOB", "BRL", "CLP", "COP", "USD");
+    private static final List<String> conversionHistory = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -24,7 +26,8 @@ public class CurrencyConverter {
         while (true) {
             System.out.println("\nSelecione uma opção:");
             System.out.println("1 - Iniciar Conversão");
-            System.out.println("2 - Finalizar Programa");
+            System.out.println("2 - Ver Histórico de Conversões");
+            System.out.println("3 - Finalizar Programa");
 
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -34,6 +37,9 @@ public class CurrencyConverter {
                     performCurrencyConversion(scanner);
                     break;
                 case 2:
+                    showConversionHistory();
+                    break;
+                case 3:
                     System.out.println("Finalizando... Obrigado por usar o Conversor de Moedas!");
                     scanner.close();
                     return;
@@ -59,7 +65,11 @@ public class CurrencyConverter {
                 double exchangeRate = getExchangeRate(sourceCurrency, targetCurrency);
                 if (exchangeRate != -1) {
                     double convertedAmount = amount * exchangeRate;
-                    System.out.printf("%.2f %s = %.2f %s%n", amount, sourceCurrency, convertedAmount, targetCurrency);
+                    String conversionResult = String.format("%.2f %s = %.2f %s", amount, sourceCurrency, convertedAmount, targetCurrency);
+                    System.out.println(conversionResult);
+
+                    // Adicionar a conversão ao histórico
+                    conversionHistory.add(conversionResult);
                 } else {
                     System.out.println("Erro ao obter as taxas de câmbio.");
                 }
@@ -109,6 +119,17 @@ public class CurrencyConverter {
 
     private static String buildApiUrl(String sourceCurrency) {
         return BASE_API_URL + API_KEY + "/latest/" + sourceCurrency;
+    }
+
+    private static void showConversionHistory() {
+        if (conversionHistory.isEmpty()) {
+            System.out.println("Nenhuma conversão foi realizada ainda.");
+        } else {
+            System.out.println("Histórico de Conversões:");
+            for (String record : conversionHistory) {
+                System.out.println(record);
+            }
+        }
     }
 
     static class ExchangeRateResponse {
