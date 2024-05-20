@@ -16,6 +16,7 @@
 * A classe HttpRequest para configurar e personalizar nossas solicitações à API de taxas de câmbio;
 * O uso da interface HttpResponse para gerenciar as respostas recebidas da API.
   - Aqui a documentação Http. https://docs.oracle.com/en/java/javase/17/docs//api/java.net.http/java/net/http/HttpClient.html
-* Como desafio extra implantei o histórico de conversões.
-  [HISTÓRICO DE CONVERSÕES](https://github.com/IvoJucaBezerra/CurrencyConverter/blob/master/img/historicoDeConversoes.png) 
+* Como desafio extra, implantei o histórico de conversões:
+  
+  ![HISTÓRICO DE CONVERSÕES](https://github.com/IvoJucaBezerra/CurrencyConverter/blob/master/img/historicoDeConversoes1.png)
 
